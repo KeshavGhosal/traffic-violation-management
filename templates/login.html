@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Traffic VMS — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#E63946;--dark:#0A0A0F;--card:#13131A;--border:#1E1E2E;
+  --text:#E8E8F0;--muted:#6B6B88;--green:#2ECC71;
+}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+
+/* animated bg */
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(230,57,70,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(230,57,70,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.bg-glow{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(230,57,70,.12) 0%,transparent 70%);pointer-events:none}
+
+.container{position:relative;z-index:1;width:100%;max-width:420px;padding:2rem}
+
+.logo-area{text-align:center;margin-bottom:2.5rem}
+.logo-icon{width:64px;height:64px;background:var(--red);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.8rem;box-shadow:0 0 40px rgba(230,57,70,.4)}
+.logo-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;color:var(--text)}
+.logo-sub{color:var(--muted);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-top:.2rem}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+
+.error-msg{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.3);color:#ff6b7a;padding:.8rem 1rem;border-radius:10px;font-size:.85rem;margin-bottom:1.5rem;display:flex;gap:.5rem;align-items:center}
+
+.form-group{margin-bottom:1.4rem}
+label{display:block;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;font-weight:500}
+input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:all .2s}
+input:focus{outline:none;border-color:var(--red);background:rgba(230,57,70,.05);box-shadow:0 0 0 3px rgba(230,57,70,.1)}
+input::placeholder{color:var(--muted)}
+
+.btn{width:100%;padding:1rem;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:all .2s;margin-top:.5rem}
+.btn:hover{background:#c62d39;transform:translateY(-1px);box-shadow:0 8px 25px rgba(230,57,70,.4)}
+.btn:active{transform:translateY(0)}
+
+.divider{text-align:center;color:var(--muted);font-size:.8rem;margin:1.5rem 0;position:relative}
+.divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)}
+.divider span{background:var(--card);padding:0 1rem;position:relative}
+
+.register-link{display:block;text-align:center;color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.register-link span{color:var(--red)}
+.register-link:hover{color:var(--text)}
+
+.demo-pills{display:flex;gap:.5rem;margin-top:1.5rem}
+.pill{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:.6rem;text-align:center;cursor:pointer;transition:all .2s;font-size:.75rem}
+.pill:hover{border-color:var(--red);background:rgba(230,57,70,.08)}
+.pill-label{color:var(--muted);display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem}
+.pill-val{color:var(--text);font-weight:600}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="container">
+  <div class="logo-area">
+    <div class="logo-icon">🚦</div>
+    <div class="logo-title">TrafficVMS</div>
+    <div class="logo-sub">Violation Management System</div>
+  </div>
+  <div class="card">
+    {% if error %}
+    <div class="error-msg">⚠️ {{ error }}</div>
+    {% endif %}
+    <form method="POST">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button class="btn" type="submit">Sign In →</button>
+    </form>
+    <div class="divider"><span>Quick Demo</span></div>
+    <div class="demo-pills">
+      <div class="pill" onclick="fillDemo('officer1','police123')">
+        <span class="pill-label">Police</span>
+        <span class="pill-val">officer1</span>
+      </div>
+      <div class="pill" onclick="fillDemo('demo_user','user123')">
+        <span class="pill-label">User</span>
+        <span class="pill-val">demo_user</span>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem"></div>
+    <a href="/register" class="register-link">New here? <span>Create account</span></a>
+  </div>
+</div>
+<script>
+function fillDemo(u,p){
+  document.querySelector('[name=username]').value=u;
+  document.querySelector('[name=password]').value=p;
+}
+</script>
+</body>
+</html>
